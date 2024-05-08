@@ -19,10 +19,10 @@ from material_agent import MaterialAgent
 HOUSE =       [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
 FLOOR =       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 2, 1]
 GARRET =      [1, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-HALL =        [0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+HALL =        [0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 BED_ROOM =    [1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 BATH_ROOM =   [1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
-LIVING_ROOM = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+LIVING_ROOM = [1, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 COMPONENTS =  [HOUSE, FLOOR, GARRET, HALL, BED_ROOM, BATH_ROOM, LIVING_ROOM]
 INDIVIDUAL_SIZE = 11
 REQUIRED_COMPS = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 4, 2, 1]
@@ -43,7 +43,8 @@ class BuilderAgent:
                 self.Inventory = [self.Inventory[i] - COMPONENTS[action][i] for i in range(len(self.Inventory))]
                 self.Inventory[action+7] += 1
                 fitness += 1
-        self.Fitness += (fitness / 12)
+        totalfitness = self.Fitness + (fitness/12)
+        self.Fitness = 1 if totalfitness > 1 else totalfitness
         return self.Fitness
 
 
@@ -70,7 +71,7 @@ class BuilderAgent:
 
     def __repr__(self):
         return f'''INVENTORY: {self.Inventory}
-                  BuildOrder: {self.BuildOrder}
-                  MissingItems: {self.MissingItems}
-                  Funds: {self.Funds}
-                  Fitness: {self.Fitness}'''
+                   BuildOrder: {self.BuildOrder}
+                   MissingItems: {self.MissingItems}
+                   Funds: {self.Funds}
+                   Fitness: {self.Fitness}'''

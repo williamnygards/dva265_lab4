@@ -12,9 +12,9 @@ import random
 from material_agent import MaterialAgent
 from builder_agent import BuilderAgent
 
-BUILDER_COUNT = 10
+BUILDER_COUNT = 2
 CROSSOVER_RATE = 0.6
-MUATATION_RATE = 0.03
+MUATATION_RATE = 0.05
 INITIAL_FUNDS = 1000000
 
 def init_pop():
@@ -46,7 +46,7 @@ def Run():
     print(fitnesses)
     matAgent = MaterialAgent()
 
-    while g < 1000:
+    while max(fitnesses) < 1:
         if any(matAgent.Inventory[i] == 0 for i in range(len(matAgent.Inventory))):
             matAgent.Restock()
         print(matAgent.Inventory)
@@ -59,7 +59,7 @@ def Run():
 
         fitnesses = evaluate(population)
         population.sort(key=lambda b: b.Fitness, reverse=True)
-        for i in range(3):
+        for i in range(2):
             population[i].TryBuy(matAgent)
         print(population[0])
         print(max(fitnesses))
